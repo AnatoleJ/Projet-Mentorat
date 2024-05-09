@@ -84,17 +84,15 @@ def eleve_aide2():
     id_personne = bdd.obtenir_id_personne_par_email(email_connexion)
 
     # Vérifier si les valeurs ne sont pas None avant d'appeler la méthode
-    if id_personne is not None:
-        id_classe = bdd.obtenir_id_classe_selon_nom(classe)
 
         # Vérifier si les valeurs ne sont pas None avant d'appeler la méthode
-        if id_classe is not None and matiere is not None and contact is not None and infos_supp is not None:
-            # Appeler la méthode pour ajouter la demande d'aide à la base de données
-            bdd.nouvelle_demande_aide(id_personne, id_classe, matiere, contact, infos_supp)
+    if matiere is not None and contact is not None and infos_supp is not None:
+        # Appeler la méthode pour ajouter la demande d'aide à la base de données
+        bdd.nouvelle_demande_aide(id_personne, matiere, contact, infos_supp)
 
             # Flash le message de succès
-            flash("La demande d'aide a été créée avec succès.", "success")
-            return render_template("eleve_accueil.html")
+        flash("La demande d'aide a été créée avec succès.", "success")
+        return render_template("eleve_accueil.html")
 
     # Si l'une des valeurs est None, flash un message d'erreur
     flash("Erreur lors de la création de la demande d'aide.", "error")

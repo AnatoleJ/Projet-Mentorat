@@ -68,12 +68,12 @@ class Bdd:
 
 
     #Méthode pour ajouter une personne dans la bdd
-    def ajouter_personne(self, nom, prenom, email, password):
+    def ajouter_personne(self, nom, prenom, classe, email, password):
         connexion = sqlite3.connect(self.chemin_bdd)
         curseur = connexion.cursor()
         requete_sql = f"""
-            INSERT INTO Personnes (Nom, Prenom, Email, Password, id_permission)
-            VALUES("{nom}","{prenom}","{email}","{password}", "1");"""
+            INSERT INTO Personnes (Nom, Prenom, Classe, Email, Password, id_permission)
+            VALUES("{nom}","{prenom}","{classe}","{email}","{password}", "1");"""
         curseur.execute(requete_sql)
         connexion.commit()
         connexion.close()
@@ -105,20 +105,34 @@ class Bdd:
         connexion.close()
         return id_personne
 
-    def obtenir_id_classe_selon_nom(self, nom_classe):
-        id_classe = 1
-        return id_classe
+#    def obtenir_id_classe_selon_nom(self, email_connexion):
+#        connexion = sqlite3.connect(self.chemin_bdd)
+#        curseur = connexion.cursor()
+#        requete_sql = f"""
+#            SELECT Personnes.Classe FROM Personnes
+#            WHERE Personnes.Email = ?;
+#        """
+#        resultat = curseur.execute(requete_sql, (email_connexion,))
+#        if resultat == "Seconde":
+#            id_classe = 1
+#        elif resultat == "Premiere":
+#            id_classe = 2
+#        elif resultat == "Terminale":
+#            id_classe = 3
+#        else :
+#            return 3
+#        return id_classe
 
 
 
-    def nouvelle_demande_aide(self, id_personne, id_classe, matiere, contact, informations):
+    def nouvelle_demande_aide(self, id_personne, matiere, contact, informations):
         connexion = sqlite3.connect(self.chemin_bdd)
         curseur = connexion.cursor()
 
         # Insérer une nouvelle demande d'aide avec les informations de l'utilisateur
         requete_sql = f"""
-            INSERT INTO Aide (id_personne, id_classe, Matiere, Contact, Informations)
-            VALUES ({id_personne}, {id_classe}, "{matiere}", "{contact}", "{informations}");
+            INSERT INTO Aide (id_personne, Matiere, Contact, Informations)
+            VALUES ({id_personne}, "{matiere}", "{contact}", "{informations}");
         """
         curseur.execute(requete_sql)
 
